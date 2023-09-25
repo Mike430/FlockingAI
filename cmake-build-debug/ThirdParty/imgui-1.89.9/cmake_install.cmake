@@ -1,4 +1,4 @@
-# Install script for directory: /home/mike/Source/mike430/FlockingAI/ThirdParty/imgui-1.89.9
+# Install script for directory: /home/myoung/Source/Mike430/FlockingAI/ThirdParty/imgui-1.89.9
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

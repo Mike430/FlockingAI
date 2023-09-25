@@ -1,6 +1,6 @@
 #Custom
-*/Output/*
-*/cmake-build-debug/*
+Output/*
+cmake-build-debug/*
 
 # Prerequisites
 *.d

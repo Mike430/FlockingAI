@@ -1,4 +1,4 @@
-# Install script for directory: /home/mike/Source/mike430/FlockingAI
+# Install script for directory: /home/myoung/Source/Mike430/FlockingAI
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/mike/Source/mike430/FlockingAI/cmake-build-debug/ThirdParty/imgui-1.89.9/cmake_install.cmake")
+  include("/home/myoung/Source/Mike430/FlockingAI/cmake-build-debug/ThirdParty/imgui-1.89.9/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -55,5 +55,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/mike/Source/mike430/FlockingAI/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/myoung/Source/Mike430/FlockingAI/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
