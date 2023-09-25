@@ -1,6 +1,0 @@
-/home/myoung/Source/Mike430/FlockingAI/cmake-build-debug/CMakeFiles/FlockingAI.dir
-/home/myoung/Source/Mike430/FlockingAI/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/myoung/Source/Mike430/FlockingAI/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/myoung/Source/Mike430/FlockingAI/cmake-build-debug/ThirdParty/imgui-1.89.9/CMakeFiles/imgui.dir
-/home/myoung/Source/Mike430/FlockingAI/cmake-build-debug/ThirdParty/imgui-1.89.9/CMakeFiles/edit_cache.dir
-/home/myoung/Source/Mike430/FlockingAI/cmake-build-debug/ThirdParty/imgui-1.89.9/CMakeFiles/rebuild_cache.dir

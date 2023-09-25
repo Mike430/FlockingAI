@@ -1,5 +1,0 @@
-/app/extra/clion/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/myoung/Source/Mike430/FlockingAI -B /home/myoung/Source/Mike430/FlockingAI/cmake-build-debug
-Compiler used =GNU
--- Configuring done
--- Generating done
--- Build files have been written to: /home/myoung/Source/Mike430/FlockingAI/cmake-build-debug
