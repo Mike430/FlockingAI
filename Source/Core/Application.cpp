@@ -1,32 +1,47 @@
 #include "Application.h"
 
+#include "World.h"
+
+//----------------------------------------------------------
+
+bool Application::IsShuttingDown = false;
 Application *Application::Self = nullptr;
+
+//----------------------------------------------------------
 
 Application *Application::GetInstance()
 {
+    if(Application::IsShuttingDown)
+    {
+        return nullptr;
+    }
+
     if ( Self == nullptr )
     {
         Application::Self = new Application();
-        if ( Application::Self != nullptr )
+        if ( Application::Self->Initialise() == false )
         {
-            if ( Application::Self->Initialise() == false )
-            {
-                LOG( "We could not establish a stable application" );
-                MURDER_APP;
-                return nullptr;
-            }
+            LOG( "We could not establish a stable application" );
+            MURDER_APP;
+            return nullptr;
         }
+        Application::Self->m_World = new World();
     }
     return Application::Self;
 }
 
+//----------------------------------------------------------
+
 void Application::Shutdown()
 {
-    if ( Self == nullptr )
+    Application::IsShuttingDown = true;
+    if ( Self != nullptr )
     {
         delete Self;
     }
 }
+
+//----------------------------------------------------------
 
 Application::Application()
         : m_Window( nullptr )
@@ -36,15 +51,22 @@ Application::Application()
 {
 }
 
+//----------------------------------------------------------
+
 Application::~Application()
 {
+    delete m_World;
     ImGui_ImplSDLRenderer2_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
     SDL_DestroyRenderer( m_Renderer );
     SDL_DestroyWindow( m_Window );
     SDL_Quit();
+
+    LOG( "Application successfully destroyed." );
 }
+
+//----------------------------------------------------------
 
 bool Application::Initialise()
 {
@@ -106,37 +128,45 @@ bool Application::Initialise()
     return true;
 }
 
+//----------------------------------------------------------
+
 void Application::StartGameLoop()
 {
     SDL_Event Event;
-    bool ShouldQuit;
+    bool ShouldQuit = false;
+
+    const float FakeDeltaTime = 1.0f / 60.0f;
+    //FrameStart = Clock::now();
 
     while ( ShouldQuit == false )
     {
+        //FrameEnd = Clock::now();
+        //Delta = (FrameEnd - FrameStart);
+        // // Pause the thread
+        //FrameStart = Clock::now();
+
         while ( SDL_PollEvent( &Event ))
         {
             if ( Event.type == SDL_QUIT ) ShouldQuit = true;
             ImGui_ImplSDL2_ProcessEvent( &Event );
         }
+
         ImGui_ImplSDLRenderer2_NewFrame();
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
 
         SDL_SetRenderDrawColor( m_Renderer,
-                                255,
+                                0,
                                 0,
                                 0,
                                 255 );
         SDL_RenderClear( m_Renderer );
-        SDL_FillRect( m_Surface,
-                      NULL,
-                      SDL_MapRGB( m_Surface->format,
-                                  0xFF,
-                                  0,
-                                  0 ));
 
-        ImGui::Begin( "My DearImGui Window" );
-        ImGui::Text( "hello, world" );
+        m_World->Update(FakeDeltaTime);
+        m_World->Draw(m_Renderer);
+
+        ImGui::Begin( "Stats" );
+        ImGui::Text( "DeltaTime = %.5f\nFramerate = %.5f", FakeDeltaTime, 1.0f / FakeDeltaTime );
         ImGui::End();
 
         ImGui::Render();
@@ -148,12 +178,4 @@ void Application::StartGameLoop()
     }
 }
 
-void Application::Update()
-{
-
-}
-
-void Application::Draw()
-{
-
-}
+//----------------------------------------------------------

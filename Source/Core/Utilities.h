@@ -1,8 +1,10 @@
+#include <chrono>
 #include <iostream>
 #include <vector>
-#include <map>
+#include <inttypes.h>
 #include <math.h>
 #include <stdint.h>
+#include <thread>
 
 #include <SDL.h>
 #include <imgui.h>
@@ -11,8 +13,11 @@
 
 //----------------------------------------------------------
 
-const int WINDOW_WIDTH = 1280;
-const int WINDOW_HEIGHT = 800;
+#define WINDOW_WIDTH 1600
+#define WINDOW_HEIGHT 900
+#define PI = 3.141592659
+#define DEGREES_TO_RADIANS 0.0174532924
+#define RADIANS_TO_DEGREES 57.29578
 
 //----------------------------------------------------------
 
@@ -35,8 +40,36 @@ typedef uint64_t        u64;
 
 //----------------------------------------------------------
 
-#define String std::string
-#define Array std::vector
-#define Map std::map
+#define S8_MIN INT8_MIN
+#define S16_MIN INT16_MIN
+#define S32_MIN INT32_MIN
+#define S64_MIN INT64_MIN
+
+#define S8_MAX INT8_MAX
+#define S16_MAX INT16_MAX
+#define S32_MAX INT32_MAX
+#define S64_MAX INT64_MAX
+
+#define U8_MAX UINT8_MAX
+#define U16_MAX UINT16_MAX
+#define U32_MAX UINT32_MAX
+#define U64_MAX UINT64_MAX
+
+//----------------------------------------------------------
+
+typedef std::chrono::high_resolution_clock              Clock;
+typedef std::chrono::seconds                            Seconds;
+typedef std::chrono::nanoseconds                        NanoSeconds;
+typedef std::chrono::time_point<Clock, NanoSeconds>     TimeStamp;
+typedef std::chrono::duration<double>                   DurationSecs;
+typedef std::chrono::duration<double, std::milli>       DurationMillis;
+//typedef std::chrono::duration<double, std::nano>        DurationNanos;
+
+#define SECONDS_TO_MILLISECONDS(x)                      (x * 1000.0)
+#define SECONDS_TO_MICROSECONDS(x)                      (x * 1000000.0)
+#define SECONDS_TO_NANOSECONDS(x)                       (x * 1000000000.0)
+
+#define TO_SECONDS(Duration)                            std::chrono::duration_cast<Seconds>(Duration);
+#define PAUSE_THREAD(Duration)                          std::this_thread::sleep_for(Duration);
 
 //----------------------------------------------------------

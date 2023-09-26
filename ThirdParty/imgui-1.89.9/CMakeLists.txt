@@ -22,5 +22,10 @@ option(IMGUI_IMPL_SDL "Build the SDL implementation (only if supported)" ON)
 
 include_directories(${SDL_DIR}include/)
 include_directories(${IMGUI_DIR})
-#add_library(imgui STATIC ${IMGUI_DIR}imgui.cpp ${IMGUI_DIR}imgui_draw.cpp ${IMGUI_DIR}imgui_tables.cpp ${IMGUI_DIR}imgui_widgets.cpp ${IMGUI_DIR}backends/imgui_impl_sdl2.cpp)
-add_library(imgui STATIC ${IMGUI_DIR}imgui.cpp ${IMGUI_DIR}imgui_draw.cpp ${IMGUI_DIR}imgui_tables.cpp ${IMGUI_DIR}imgui_widgets.cpp ${IMGUI_DIR}backends/imgui_impl_sdl2.cpp ${IMGUI_DIR}backends/imgui_impl_sdlrenderer2.cpp)
+add_library(imgui STATIC
+        ${IMGUI_DIR}imgui.cpp
+        ${IMGUI_DIR}imgui_draw.cpp
+        ${IMGUI_DIR}imgui_tables.cpp
+        ${IMGUI_DIR}imgui_widgets.cpp
+        ${IMGUI_DIR}backends/imgui_impl_sdl2.cpp
+        ${IMGUI_DIR}backends/imgui_impl_sdlrenderer2.cpp)
