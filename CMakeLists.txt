@@ -29,10 +29,9 @@ add_executable(FlockingAI
         Source/Game/SteeringBehaviours.h
         Source/Game/Boid.cpp
         Source/Game/Boid.h
-        Source/Core/Transform.cpp
         Source/Core/Transform.h
         Source/Core/World.cpp
         Source/Core/World.h
         Source/Core/GameObject.cpp
-        Source/Core/GameObject.h)
+        Source/Core/GameObject.h Source/Core/RenderUtils.cpp Source/Core/RenderUtils.h)
 target_link_libraries(FlockingAI PRIVATE imgui SDL2main SDL2)

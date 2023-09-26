@@ -7,7 +7,8 @@ int main( int argc, char *args[] )
 
     for(int i = 0; i < 5; ++i)
     {
-        new GameObject();
+        GameObject* NewObject = new GameObject();
+        NewObject->m_Transform.m_Position = {-50.0f + 20.0f * i, -50.0f + 20.0f * i};
     }
 
     App->StartGameLoop();

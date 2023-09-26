@@ -15,6 +15,11 @@
 
 #define WINDOW_WIDTH 1600
 #define WINDOW_HEIGHT 900
+#define WINDOW_HALF_WIDTH 800
+#define WINDOW_HALF_HEIGHT 450
+static_assert(WINDOW_HALF_WIDTH == WINDOW_WIDTH / 2, "The window's half width must be half the given width");
+static_assert(WINDOW_HALF_HEIGHT == WINDOW_HEIGHT / 2, "The window's half height must be half the given height");
+
 #define PI = 3.141592659
 #define DEGREES_TO_RADIANS 0.0174532924
 #define RADIANS_TO_DEGREES 57.29578

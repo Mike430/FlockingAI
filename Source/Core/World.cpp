@@ -1,12 +1,14 @@
 #include "World.h"
 
 #include "GameObject.h"
+#include "RenderUtils.h"
 
 //----------------------------------------------------------
 
 World::World()
 : m_isShuttingDown(false)
 , m_gameObjects()
+, m_worldViewTransform()
 {
 }
 
@@ -79,8 +81,13 @@ void World::Draw(SDL_Renderer* InRenderer)
 {
     for ( int i = 0; i < m_gameObjects.size(); ++i )
     {
-        if(m_gameObjects[i]->m_texture != nullptr)
+        if(m_gameObjects[i]->m_texture == nullptr)
         {
+            RenderUtils::DrawTransform(InRenderer, m_worldViewTransform, m_gameObjects[i]->m_Transform);
+        }
+        else
+        {
+            // Splat the texture here
         }
     }
 }

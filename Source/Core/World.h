@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Utilities.h"
+#include "Transform.h"
 
 //----------------------------------------------------------
 
@@ -21,6 +22,7 @@ public:
 private:
     bool m_isShuttingDown;
     std::vector<GameObject*> m_gameObjects;
+    Transform m_worldViewTransform;
 };
 
 //----------------------------------------------------------

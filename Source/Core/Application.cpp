@@ -172,7 +172,6 @@ void Application::StartGameLoop()
         ImGui::Render();
         ImGui_ImplSDLRenderer2_RenderDrawData( ImGui::GetDrawData());
 
-        //Update the surface
         SDL_UpdateWindowSurface( m_Window );
         SDL_RenderPresent( m_Renderer );
     }
