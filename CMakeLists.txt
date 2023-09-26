@@ -11,12 +11,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR})
 
 set(SDL_DIR ${CMAKE_SOURCE_DIR}/ThirdParty/SDL-release-2.28.3/)
 set(IMGUI_DIR ${CMAKE_SOURCE_DIR}/ThirdParty/imgui-1.89.9/)
+set(SDL_IMAGE_DIR ${CMAKE_SOURCE_DIR}/ThirdParty/SDL2_image-2.6.3/)
 
-include_directories(${CMAKE_SOURCE_DIR}/ThirdParty/SDL-release-2.28.3/include/)
+include_directories(${SDL_DIR}include/)
 include_directories(${IMGUI_DIR})
+include_directories("${SDL_IMAGE_DIR}")
 link_directories(${OUTPUT_DIR})
 
 add_subdirectory("${IMGUI_DIR}")
+add_subdirectory("${SDL_IMAGE_DIR}")
 
 add_executable(FlockingAI
         Source/main.cpp
@@ -33,5 +36,7 @@ add_executable(FlockingAI
         Source/Core/World.cpp
         Source/Core/World.h
         Source/Core/GameObject.cpp
-        Source/Core/GameObject.h Source/Core/RenderUtils.cpp Source/Core/RenderUtils.h)
-target_link_libraries(FlockingAI PRIVATE imgui SDL2main SDL2)
+        Source/Core/GameObject.h
+        Source/Core/RenderUtils.cpp
+        Source/Core/RenderUtils.h)
+target_link_libraries(FlockingAI PRIVATE imgui SDL2main SDL2 SDL2_image)

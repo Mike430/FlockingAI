@@ -10,6 +10,7 @@ World::World()
 , m_gameObjects()
 , m_worldViewTransform()
 {
+    m_worldViewTransform.m_Position = {200, -200};
 }
 
 //----------------------------------------------------------
@@ -83,11 +84,20 @@ void World::Draw(SDL_Renderer* InRenderer)
     {
         if(m_gameObjects[i]->m_texture == nullptr)
         {
-            RenderUtils::DrawTransform(InRenderer, m_worldViewTransform, m_gameObjects[i]->m_Transform);
+            RenderUtils::DrawTransform(InRenderer,
+                                       m_worldViewTransform,
+                                       m_gameObjects[i]->m_Transform);
         }
         else
         {
-            // Splat the texture here
+            RenderUtils::DrawTexture(InRenderer,
+                                     m_worldViewTransform,
+                                     m_gameObjects[i]->m_Transform,
+                                     m_gameObjects[i]->m_texture);
+
+            RenderUtils::DrawTransform(InRenderer,
+                                       m_worldViewTransform,
+                                       m_gameObjects[i]->m_Transform);
         }
     }
 }

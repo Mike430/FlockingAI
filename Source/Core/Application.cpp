@@ -37,8 +37,63 @@ void Application::Shutdown()
     Application::IsShuttingDown = true;
     if ( Self != nullptr )
     {
+        for(const std::pair<std::string, SDL_Texture*>& entry : Self->m_TextureAssetPool)
+        {
+            SDL_DestroyTexture(entry.second);
+        }
+
         delete Self;
     }
+}
+
+//----------------------------------------------------------
+
+SDL_Texture* Application::GetTexture( const std::string& InAssetPath )
+{
+    Application* application = Application::GetInstance();
+    for(const std::pair<std::string, SDL_Texture*>& entry : application->m_TextureAssetPool)
+    {
+        if( entry.first == InAssetPath)
+        {
+            return entry.second;
+        }
+    }
+
+    SDL_Texture* NewTexture = LoadTexture(InAssetPath);
+
+    if(NewTexture != nullptr)
+    {
+        application->m_TextureAssetPool.insert( std::pair< std::string, SDL_Texture * >( InAssetPath, NewTexture ));
+    }
+
+    return NewTexture;
+}
+
+//----------------------------------------------------------
+
+SDL_Texture* Application::LoadTexture( const std::string& InAssetPath )
+{
+    SDL_Texture* NewTexture = nullptr;
+    Application* application = Application::GetInstance();
+
+    SDL_Surface* LoadedSurface = IMG_Load(InAssetPath.c_str());
+    if(LoadedSurface == nullptr)
+    {
+        LOG("We could not load %s", InAssetPath.c_str());
+    }
+    else
+    {
+        NewTexture = SDL_CreateTextureFromSurface(application->m_Renderer, LoadedSurface);
+
+        if(NewTexture == nullptr)
+        {
+            LOG("Unable to create texture from %s - SDL error: %s", InAssetPath.c_str(), SDL_GetError());
+        }
+
+        SDL_FreeSurface(LoadedSurface);
+    }
+
+    return NewTexture;
 }
 
 //----------------------------------------------------------

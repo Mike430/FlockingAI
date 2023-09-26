@@ -11,7 +11,13 @@ namespace RenderUtils
                   const u8 InR,
                   const u8 InG,
                   const u8 InB);
+
     void DrawTransform(SDL_Renderer* InRenderer,
                        const Transform& InWorldView,
                        const Transform& InTransform);
+
+    void DrawTexture(SDL_Renderer* InRenderer,
+                     const Transform& InWorldView,
+                     const Transform& InTransform,
+                     SDL_Texture* InTexture);
 };

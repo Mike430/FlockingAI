@@ -1,5 +1,6 @@
 #include <chrono>
 #include <iostream>
+#include <map>
 #include <vector>
 #include <inttypes.h>
 #include <math.h>
@@ -7,6 +8,7 @@
 #include <thread>
 
 #include <SDL.h>
+#include <SDL_image.h>
 #include <imgui.h>
 #include <backends/imgui_impl_sdl2.h>
 #include <backends/imgui_impl_sdlrenderer2.h>
