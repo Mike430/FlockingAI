@@ -7,16 +7,17 @@ int main( int argc, char *args[] )
 
     {
         std::vector< Boid * > Boids;
-        for ( int i = 0; i < 15; ++i )
+        s32 numOfBoids = 15;
+        for ( int i = 0; i < numOfBoids; ++i )
         {
             Boid *NewObject = new Boid();
-            NewObject->m_Transform.m_Position = { -500.0f + 50.0f * i, -500.0f + 50.0f * i };
+            NewObject->m_Transform.m_Position = { -500.0f + 50.0f * i, -500.0f };
             NewObject->m_Transform.m_Rotation = i * 15;
-            NewObject->m_texture = App->GetTexture( "Assets/Enemy.png" );
-            Boids.push_back(NewObject);
+            NewObject->m_texture = i == 0 || i == ( numOfBoids - 1 ) ? App->GetTexture( "Assets/Player.png" ) : App->GetTexture( "Assets/Enemy.png" );
+            Boids.push_back( NewObject );
         }
 
-        if(Boids.size() > 1)
+        if ( Boids.size() > 1 )
         {
             for ( int i = 0; i < Boids.size(); ++i )
             {

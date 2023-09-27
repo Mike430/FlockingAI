@@ -44,7 +44,7 @@ public:
     // Returns a vector reflected by the normal (must be unit length), like the path of light reflecting off a mirror
     inline void Reflect( const Vec2& normal )                       { *this += ( ( 2.0f * DotProduct( normal ) ) * normal.GetReverse() ); }
     inline void Clamp( float maxLength )                            { *this = GetLength() < maxLength ? *this : GetNormalised() * maxLength; }
-    inline s32 TurnRotationSign( const Vec2& rhs )                  { return y * rhs.x > x * rhs.y ? -1 : 1;} // multiply turn angles by -1 to go anticlockwise or 1 to go clockwise
+    inline s32 TurnRotationSign( const Vec2& rhs )                  { return y * rhs.x > x * rhs.y ? -1 : 1; } // multiply turn angles by -1 to go anticlockwise or 1 to go clockwise
 };
 
 //----------------------------------------------------------

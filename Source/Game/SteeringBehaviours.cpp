@@ -3,9 +3,9 @@
 
 //----------------------------------------------------------
 
-Vec2 Steering::SeekFunc( const Boid &InBoid, const Vec2& InTarget )
+Vec2 Steering::SeekFunc( const Boid &InBoid, const Vec2 &InTarget )
 {
-    Vec2 DesiredVelocity = InTarget - InBoid.m_Transform.m_Position * InBoid.m_MaxSpeed;
+    Vec2 DesiredVelocity = ( InTarget - InBoid.m_Transform.m_Position ) * InBoid.m_MaxSpeed;
     return DesiredVelocity - InBoid.m_Velocity;
 }
 
