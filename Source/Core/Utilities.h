@@ -16,9 +16,9 @@
 //----------------------------------------------------------
 
 #define WINDOW_WIDTH 1600
-#define WINDOW_HEIGHT 900
+#define WINDOW_HEIGHT 1000
 #define WINDOW_HALF_WIDTH 800
-#define WINDOW_HALF_HEIGHT 450
+#define WINDOW_HALF_HEIGHT 500
 static_assert(WINDOW_HALF_WIDTH == WINDOW_WIDTH / 2, "The window's half width must be half the given width");
 static_assert(WINDOW_HALF_HEIGHT == WINDOW_HEIGHT / 2, "The window's half height must be half the given height");
 

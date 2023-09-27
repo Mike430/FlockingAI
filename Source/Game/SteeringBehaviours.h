@@ -1,15 +1,17 @@
-//
-// Created by myoung on 25/09/23.
-//
+#pragma once
 
-#ifndef FLOCKINGAI_STEERINGBEHAVIOURS_H
-#define FLOCKINGAI_STEERINGBEHAVIOURS_H
+#include "Core/Vec2.h"
 
-
-class SteeringBehaviours
+namespace Steering
 {
+    enum Behaviour
+    {
+        Seek,
+        Flee,
+        Arrive,
+        Pursuit,
+        Evade
+    };
 
-};
 
-
-#endif //FLOCKINGAI_STEERINGBEHAVIOURS_H
+}

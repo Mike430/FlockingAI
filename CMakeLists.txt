@@ -12,10 +12,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR})
 set(SDL_DIR ${CMAKE_SOURCE_DIR}/ThirdParty/SDL-release-2.28.3/)
 set(IMGUI_DIR ${CMAKE_SOURCE_DIR}/ThirdParty/imgui-1.89.9/)
 set(SDL_IMAGE_DIR ${CMAKE_SOURCE_DIR}/ThirdParty/SDL2_image-2.6.3/)
+set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/Source/)
 
 include_directories(${SDL_DIR}include/)
 include_directories(${IMGUI_DIR})
-include_directories("${SDL_IMAGE_DIR}")
+include_directories(${SDL_IMAGE_DIR})
+include_directories(${SOURCE_DIR})
 link_directories(${OUTPUT_DIR})
 
 add_subdirectory("${IMGUI_DIR}")

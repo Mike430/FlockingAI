@@ -1,7 +1,7 @@
-#include "World.h"
+#include "Core/World.h"
 
-#include "GameObject.h"
-#include "RenderUtils.h"
+#include "Core/GameObject.h"
+#include "Core/RenderUtils.h"
 
 //----------------------------------------------------------
 

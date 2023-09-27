@@ -1,6 +1,6 @@
-#include "Application.h"
+#include "Core/Application.h"
 
-#include "World.h"
+#include "Core/World.h"
 
 //----------------------------------------------------------
 
