@@ -40,8 +40,8 @@ void RenderUtils::DrawTexture( SDL_Renderer* InRenderer,
     const Vec2 HalfView(WINDOW_HALF_WIDTH, WINDOW_HALF_HEIGHT);
     const Vec2 ImageCentre = (InTransform.m_Position - InWorldView.m_Position) + HalfView;
     const Vec2 ImgaeSize = 50.0f * InTransform.m_Scale;
-    const SDL_Rect ScreenBounds = {(s32)ImageCentre.x, (s32)ImageCentre.y, (s32)ImgaeSize.x, (s32)ImgaeSize.y};
     const SDL_Point ImagePivotPoint = {(s32)(ImgaeSize.x * 0.5f), (s32)(ImgaeSize.y * 0.5f)};
+    const SDL_Rect ScreenBounds = {(s32)ImageCentre.x - ImagePivotPoint.x, (s32)ImageCentre.y - ImagePivotPoint.y, (s32)ImgaeSize.x, (s32)ImgaeSize.y};
 
     SDL_RenderCopyEx(InRenderer, InTexture, nullptr, &ScreenBounds, (double)InTransform.m_Rotation, &ImagePivotPoint, SDL_RendererFlip::SDL_FLIP_NONE);
 }
