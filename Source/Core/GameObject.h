@@ -2,6 +2,8 @@
 #include "Core/Utilities.h"
 #include "Core/Transform.h"
 
+//----------------------------------------------------------
+
 class GameObject
 {
 public:
@@ -13,3 +15,5 @@ public:
     Transform m_Transform;
     SDL_Texture* m_texture;
 };
+
+//----------------------------------------------------------

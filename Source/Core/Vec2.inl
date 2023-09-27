@@ -4,7 +4,7 @@
 
 inline Vec2 Vec2::operator+( float rhs ) const
 {
-    float newLength = GetLengthSqr() + rhs;
+    float newLength = GetLength() + rhs;
     Vec2 newVector = GetNormalised();
     return newVector * ( newLength );
 }
@@ -13,7 +13,7 @@ inline Vec2 Vec2::operator+( float rhs ) const
 
 inline Vec2 Vec2::operator-( float rhs ) const
 {
-    float newLength = GetLengthSqr() - rhs;
+    float newLength = GetLength() - rhs;
     Vec2 newVector = GetNormalised();
     return newVector * ( newLength );
 }
@@ -22,7 +22,7 @@ inline Vec2 Vec2::operator-( float rhs ) const
 
 inline void Vec2::operator+=( float rhs )
 {
-    float newLength = GetLengthSqr() + rhs;
+    float newLength = GetLength() + rhs;
     Normalise();
     *this *= ( newLength );
 }
@@ -31,26 +31,9 @@ inline void Vec2::operator+=( float rhs )
 
 inline void Vec2::operator-=( float rhs )
 {
-    float newLength = GetLengthSqr() - rhs;
+    float newLength = GetLength() - rhs;
     Normalise();
     *this *= ( newLength );
-}
-
-//----------------------------------------------------------
-
-inline Vec2 Vec2::GetNormalised() const
-{
-    float length = GetLengthSqr();
-    return Vec2( x / length, y / length );
-}
-
-//----------------------------------------------------------
-
-inline void Vec2::Normalise()
-{
-    float length = GetLengthSqr();
-    x /= length;
-    y /= length;
 }
 
 //----------------------------------------------------------

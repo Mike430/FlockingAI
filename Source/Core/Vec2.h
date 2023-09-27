@@ -35,8 +35,8 @@ public:
     inline float GetLength() const                                  { return sqrtf( ( x * x ) + ( y * y ) ); }
 
     inline float DotProduct( const Vec2& other ) const              { return ( this->x * other.x ) + ( this->y * other.y ); }
-    inline Vec2 GetNormalised() const;
-    inline void Normalise();
+    inline Vec2 GetNormalised() const                               { float length = GetLength(); return Vec2( x / length, y / length ); }
+    inline void Normalise()                                         { float length = GetLength(); x /= length; y /= length; }
 
     inline Vec2 GetPerpendicularVector() const                      { return Vec2( -y, x ); }
     inline Vec2 GetReverse() const                                  { return Vec2( -x, -y ); }
@@ -44,6 +44,7 @@ public:
     // Returns a vector reflected by the normal (must be unit length), like the path of light reflecting off a mirror
     inline void Reflect( const Vec2& normal )                       { *this += ( ( 2.0f * DotProduct( normal ) ) * normal.GetReverse() ); }
     inline void Clamp( float maxLength )                            { *this = GetLength() < maxLength ? *this : GetNormalised() * maxLength; }
+    inline s32 TurnRotationSign( const Vec2& rhs )                  { return y * rhs.x > x * rhs.y ? -1 : 1;} // multiply turn angles by -1 to go anticlockwise or 1 to go clockwise
 };
 
 //----------------------------------------------------------
