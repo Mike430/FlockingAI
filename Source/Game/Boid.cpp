@@ -36,7 +36,7 @@ void Boid::Update( const float InDeltaTime )
     switch ( Behaviour )
     {
         case Steering::Behaviour::Seek:
-            SteeringForce = Steering::SeekFunc(*this, m_Target->m_Transform.m_Position);
+            SteeringForce = Steering::CalcSeek( *this, m_Target->m_Transform.m_Position );
             break;
         case Steering::Behaviour::Flee:
             break;
@@ -73,7 +73,7 @@ void Boid::RotateToFaceHeading( const float InDeltaTime )
     if(angle != angle){angle = 0.0f;} // nan is the return value of acosf if we're facing the right direction
     if(angle < 0.00001f){return;} // we're facing dead on more or less
     s32 sign = facingDir.TurnRotationSign(m_Heading);
-    m_Transform.m_Rotation += RADIANS_TO_DEGREES * (angle * (m_MaxTurnRate * InDeltaTime) * sign);
+    m_Transform.m_Rotation += RADIANS_TO_DEGREES * (angle * sign);
 }
 
 //----------------------------------------------------------

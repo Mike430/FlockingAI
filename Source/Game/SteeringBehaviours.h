@@ -19,7 +19,9 @@ namespace Steering
         Evade,
     };
 
-    Vec2 SeekFunc( const Boid &InBoid, const Vec2 &InTarget );
+    Vec2 CalcSeek( const Boid &InBoid, const Vec2 &InTarget );
+    Vec2 CalcFlee( const Boid &InBoid, const Vec2 &InTarget );
+    Vec2 CalcArrive( const Boid &InBoid, const Vec2 &InTarget );
 }
 
 //----------------------------------------------------------

@@ -3,15 +3,18 @@
 
 int main( int argc, char *args[] )
 {
+    RAND_SET_SEED(time(nullptr));
     Application *App = Application::GetInstance();
 
-    {
+    { // setup a testing scenario
         std::vector< Boid * > Boids;
         s32 numOfBoids = 15;
         for ( int i = 0; i < numOfBoids; ++i )
         {
             Boid *NewObject = new Boid();
-            NewObject->m_Transform.m_Position = { -500.0f + 50.0f * i, -500.0f };
+            float x = RAND_NUM_IN_RANGE( -WINDOW_HALF_WIDTH, WINDOW_HALF_WIDTH );
+            float y = RAND_NUM_IN_RANGE( -WINDOW_HALF_HEIGHT, WINDOW_HALF_HEIGHT );
+            NewObject->m_Transform.m_Position = { x, y };
             NewObject->m_Transform.m_Rotation = i * 15;
             NewObject->m_texture = i == 0 || i == ( numOfBoids - 1 ) ? App->GetTexture( "Assets/Player.png" ) : App->GetTexture( "Assets/Enemy.png" );
             Boids.push_back( NewObject );

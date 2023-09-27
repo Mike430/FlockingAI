@@ -1,6 +1,7 @@
 #pragma once
-#include "Core/Utilities.h"
+
 #include "Core/Transform.h"
+#include "Core/Utilities.h"
 
 namespace RenderUtils
 {

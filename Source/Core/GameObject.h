@@ -1,6 +1,7 @@
 #pragma once
-#include "Core/Utilities.h"
+
 #include "Core/Transform.h"
+#include "Core/Utilities.h"
 
 //----------------------------------------------------------
 
@@ -10,7 +11,7 @@ public:
     GameObject();
     ~GameObject();
 
-    virtual void Update(const float InDeltaTime);
+    virtual void Update(const float InDeltaTime){}
 
     Transform m_Transform;
     SDL_Texture* m_texture;

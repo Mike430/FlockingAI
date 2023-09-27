@@ -1,11 +1,15 @@
+#pragma once
+
 #include <chrono>
+#include <cstdlib>
+#include <ctime>
+#include <inttypes.h>
 #include <iostream>
 #include <map>
-#include <vector>
-#include <inttypes.h>
 #include <math.h>
 #include <stdint.h>
 #include <thread>
+#include <vector>
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -19,8 +23,8 @@
 #define WINDOW_HEIGHT 1000
 #define WINDOW_HALF_WIDTH 800
 #define WINDOW_HALF_HEIGHT 500
-static_assert(WINDOW_HALF_WIDTH == WINDOW_WIDTH / 2, "The window's half width must be half the given width");
-static_assert(WINDOW_HALF_HEIGHT == WINDOW_HEIGHT / 2, "The window's half height must be half the given height");
+static_assert( WINDOW_HALF_WIDTH == WINDOW_WIDTH / 2, "The window's half width must be half the given width" );
+static_assert( WINDOW_HALF_HEIGHT == WINDOW_HEIGHT / 2, "The window's half height must be half the given height" );
 
 #define PI = 3.141592659
 #define DEGREES_TO_RADIANS 0.0174532924
@@ -32,7 +36,7 @@ static_assert(WINDOW_HALF_HEIGHT == WINDOW_HEIGHT / 2, "The window's half height
 
 //----------------------------------------------------------
 
-#define LOG(...) printf("Log in file \"%s\" at line (%d) says:\t\"", __FILE__, __LINE__);printf(__VA_ARGS__); printf("\"\n")
+#define LOG(...) printf( "Log in file \"%s\" at line (%d) says:\t\"", __FILE__, __LINE__ ); printf( __VA_ARGS__ ); printf( "\"\n" )
 
 //----------------------------------------------------------
 
@@ -78,5 +82,10 @@ typedef std::chrono::duration<double, std::milli>       DurationMillis;
 
 #define TO_SECONDS(Duration)                            std::chrono::duration_cast<Seconds>(Duration);
 #define PAUSE_THREAD(Duration)                          std::this_thread::sleep_for(Duration);
+
+//----------------------------------------------------------
+
+#define RAND_SET_SEED( x ) ( srand(x) )
+#define RAND_NUM_IN_RANGE(InMin, InMax) ( ( rand() % ( ( InMax ) - ( InMin ) ) ) + ( InMin ) )
 
 //----------------------------------------------------------
