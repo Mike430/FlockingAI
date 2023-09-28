@@ -4,6 +4,7 @@
 
 Boid::Boid()
 : GameObject()
+, m_Target(nullptr)
 , Behaviour(Steering::Behaviour::Seek)
 , m_Velocity()
 , m_Heading()
@@ -27,25 +28,22 @@ void Boid::Update( const float InDeltaTime )
 {
     GameObject::Update( InDeltaTime );
 
-    if(m_Target == nullptr)
-    {
-        return;
-    }
+    const Vec2 Target = m_Target != nullptr ? m_Target->m_Transform.m_Position : Vec2();
 
     Vec2 SteeringForce;
     switch ( Behaviour )
     {
         case Steering::Behaviour::Seek:
-            SteeringForce = Steering::CalcSeek( *this, m_Target->m_Transform.m_Position );
+            SteeringForce = Steering::CalcSeek( *this, Target );
             break;
         case Steering::Behaviour::Flee:
-            SteeringForce = Steering::CalcFlee( *this, m_Target->m_Transform.m_Position );
+            SteeringForce = Steering::CalcFlee( *this, Target );
             break;
         case Steering::Behaviour::Arrive:
-            SteeringForce = Steering::CalcArrive( *this, m_Target->m_Transform.m_Position );
+            SteeringForce = Steering::CalcArrive( *this, Target );
             break;
         case Steering::Behaviour::Wander:
-            SteeringForce = Steering::CalcWander( *this, m_Target->m_Transform.m_Position );
+            SteeringForce = Steering::CalcWander( *this, Target );
             break;
         default:
             LOG("Error - steering behaviour set is not handled by the boid");

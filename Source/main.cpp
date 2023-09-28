@@ -8,7 +8,7 @@ int main( int argc, char *args[] )
 
     { // setup a testing scenario
         std::vector< Boid * > Boids;
-        s32 numOfBoids = 15;
+        s32 numOfBoids = 10;
         for ( int i = 0; i < numOfBoids; ++i )
         {
             Boid *NewObject = new Boid();
@@ -28,7 +28,8 @@ int main( int argc, char *args[] )
                 if ( i < Boids.size() - 1 )
                 {
                     Boids[ i ]->m_Target = Boids[ i + 1 ];
-                } else
+                }
+                else
                 {
                     Boids[ i ]->m_Target = Boids[ 0 ];
                 }
