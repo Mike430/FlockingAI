@@ -191,8 +191,8 @@ void Application::StartGameLoop()
     bool ShouldQuit = false;
 
     const float FakeDeltaTime = 1.0f / 60.0f;
-    double PreviousFrameUpdateTime = 0.0f;
-    double PreviousFrameRenderTime = 0.0f;
+    double PreviousFrameUpdateTime = 0.0;
+    double PreviousFrameRenderTime = 0.0;
     TimeStamp UpdateStart;
     TimeStamp UpdateEnd;
     TimeStamp RenderEnd;
