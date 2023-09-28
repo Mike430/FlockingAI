@@ -4,7 +4,7 @@
 
 //----------------------------------------------------------
 
-class Boid;
+class Agent;
 
 //----------------------------------------------------------
 
@@ -18,10 +18,10 @@ namespace Steering
         Wander
     };
 
-    Vec2 CalcSeek( const Boid &InBoid, const Vec2 &InTarget );
-    Vec2 CalcFlee( const Boid &InBoid, const Vec2 &InTarget );
-    Vec2 CalcArrive( const Boid &InBoid, const Vec2 &InTarget );
-    Vec2 CalcDumbWander( const Boid &InBoid );
+    Vec2 CalcSeek( const Agent &InAgent, const Vec2 &InTarget );
+    Vec2 CalcFlee( const Agent &InAgent, const Vec2 &InTarget );
+    Vec2 CalcArrive( const Agent &InAgent, const Vec2 &InTarget );
+    Vec2 CalcDumbWander( const Agent &InAgent );
 }
 
 //----------------------------------------------------------

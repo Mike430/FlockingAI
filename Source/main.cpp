@@ -11,14 +11,14 @@ int main( int argc, char *args[] )
         s32 numOfBoids = 10;
         for ( int i = 0; i < numOfBoids; ++i )
         {
-            Boid *NewObject = new Boid();
+            Boid *NewBoid = new Boid();
             float x = RAND_NUM_IN_RANGE( -WINDOW_HALF_WIDTH, WINDOW_HALF_WIDTH );
             float y = RAND_NUM_IN_RANGE( -WINDOW_HALF_HEIGHT, WINDOW_HALF_HEIGHT );
-            NewObject->m_Transform.m_Position = { x, y };
-            NewObject->m_Transform.m_Rotation = i * 15;
-            NewObject->m_texture = i == 0 || i == ( numOfBoids - 1 ) ? App->GetTexture( "Assets/Player.png" ) : App->GetTexture( "Assets/Enemy.png" );
-            NewObject->Behaviour = Steering::Behaviour::Wander;
-            Boids.push_back( NewObject );
+            NewBoid->m_Transform.m_Position = { x, y };
+            NewBoid->m_Transform.m_Rotation = i * 15;
+            NewBoid->m_texture = i == 0 || i == ( numOfBoids - 1 ) ? App->GetTexture( "Assets/Player.png" ) : App->GetTexture( "Assets/Enemy.png" );
+            NewBoid->Behaviour = Steering::Behaviour::Arrive;
+            Boids.push_back( NewBoid );
         }
 
         if ( Boids.size() > 1 )
