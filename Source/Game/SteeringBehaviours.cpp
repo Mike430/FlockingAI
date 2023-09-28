@@ -38,9 +38,9 @@ Vec2 Steering::CalcArrive( const Boid &InBoid, const Vec2 &InTarget )
 
 //----------------------------------------------------------
 
-Vec2 Steering::CalcWander( const Boid &InBoid, const Vec2 &InTarget )
+Vec2 Steering::CalcDumbWander( const Boid &InBoid )
 {
-    return Vec2();
+    return InBoid.m_Transform.CalculateForwardUnitVector() * InBoid.m_MaxSpeed;
 }
 
 //----------------------------------------------------------
