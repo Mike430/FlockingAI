@@ -10,7 +10,7 @@ World::World()
 , m_gameObjects()
 , m_worldViewTransform()
 {
-    m_worldViewTransform.m_Position = {200, -200};
+    m_worldViewTransform.m_Position = {0, 0};
 }
 
 //----------------------------------------------------------

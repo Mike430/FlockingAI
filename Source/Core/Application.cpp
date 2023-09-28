@@ -191,15 +191,17 @@ void Application::StartGameLoop()
     bool ShouldQuit = false;
 
     const float FakeDeltaTime = 1.0f / 60.0f;
-    //FrameStart = Clock::now();
+    double PreviousFrameUpdateTime = 0.0f;
+    double PreviousFrameRenderTime = 0.0f;
+    TimeStamp UpdateStart;
+    TimeStamp UpdateEnd;
+    TimeStamp RenderEnd;
 
     while ( ShouldQuit == false )
     {
-        //FrameEnd = Clock::now();
-        //Delta = (FrameEnd - FrameStart);
-        // // Pause the thread
-        //FrameStart = Clock::now();
-
+        PreviousFrameUpdateTime = std::chrono::duration_cast<DurationMillis>(UpdateEnd - UpdateStart).count();
+        PreviousFrameRenderTime = std::chrono::duration_cast<DurationMillis>(RenderEnd - UpdateEnd).count();
+        UpdateStart = Clock::now();
         while ( SDL_PollEvent( &Event ))
         {
             if ( Event.type == SDL_QUIT ) ShouldQuit = true;
@@ -218,16 +220,22 @@ void Application::StartGameLoop()
         SDL_RenderClear( m_Renderer );
 
         m_World->Update(FakeDeltaTime);
+        UpdateEnd = Clock::now();
         m_World->Draw(m_Renderer);
 
         ImGui::Begin( "Stats" );
-        ImGui::Text( "DeltaTime = %.5f\nFramerate = %.5f", FakeDeltaTime, 1.0f / FakeDeltaTime );
+        ImGui::Text( "DeltaTime = %.5f\nFramerate = %.5f\nUpdate time = %.5f ms\nRender time = %.5f ms",
+                     FakeDeltaTime,
+                     1.0f / FakeDeltaTime,
+                     PreviousFrameUpdateTime,
+                     PreviousFrameRenderTime );
         ImGui::End();
 
         ImGui::Render();
         ImGui_ImplSDLRenderer2_RenderDrawData( ImGui::GetDrawData());
 
         SDL_UpdateWindowSurface( m_Window );
+        RenderEnd = Clock::now(); // Vsync occurs when the renderer presents on the next line
         SDL_RenderPresent( m_Renderer );
     }
 }
