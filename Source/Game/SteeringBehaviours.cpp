@@ -46,17 +46,17 @@ Vec2 Steering::CalcDumbWander( const Agent& InAgent )
 
 //----------------------------------------------------------
 
-Vec2 Steering::CalcSeparation( const Agent& InAgent, const std::vector<Agent*>& Neighbours, const double ActivationRange )
+Vec2 Steering::CalcSeparation( const Agent& InAgent, const std::vector<Agent*>& Neighbours )
 {
     Vec2 SteeringForce;
 
-    for(int i = 0; i < Neighbours.size(); ++i)
+    for(s32 i = 0; i < Neighbours.size(); ++i)
     {
         if(Neighbours[i] != &InAgent)
         {
             Vec2 ToAgent = InAgent.m_Transform.m_Position - Neighbours[i]->m_Transform.m_Position;
             float ToAgentLength = ToAgent.GetLength();
-            SteeringForce += (ToAgent.GetNormalised() / ToAgentLength) * ((ActivationRange * ActivationRange) * 0.5f); // the activation range is not a part of the standard equation but I think this is due to a difference in scale - revise later. Actovatopm ramge amd the magic number s a placeholder to make this act more as expected
+            SteeringForce += (ToAgent.GetNormalised() / ToAgentLength);
         }
     }
 
@@ -65,16 +65,52 @@ Vec2 Steering::CalcSeparation( const Agent& InAgent, const std::vector<Agent*>& 
 
 //----------------------------------------------------------
 
-Vec2 Steering::CalcAlignment( const Agent& InAgent, const std::vector<Agent*>& Neighbours, const double ActivationRange )
+Vec2 Steering::CalcAlignment( const Agent& InAgent, const std::vector<Agent*>& Neighbours )
 {
-    return Vec2();
+    Vec2 SteeringForce;
+    s32 NeighbourCount = 0;
+
+    for(s32 i = 0; i < Neighbours.size(); ++i)
+    {
+        if(Neighbours[i] != &InAgent)
+        {
+            SteeringForce += Neighbours[i]->m_Heading;
+            ++NeighbourCount;
+        }
+    }
+
+    if(NeighbourCount > 0)
+    {
+        SteeringForce /= NeighbourCount;
+        SteeringForce -= InAgent.m_Heading;
+    }
+
+    return SteeringForce;
 }
 
 //----------------------------------------------------------
 
-Vec2 Steering::CalcCohesion( const Agent& InAgent, const std::vector<Agent*>& Neighbours, const double ActivationRange )
+Vec2 Steering::CalcCohesion( const Agent& InAgent, const std::vector<Agent*>& Neighbours )
 {
-    return Vec2();
+    Vec2 SteeringForce, CenterOfMass;
+    s32 NeighbourCount = 0;
+
+    for(s32 i = 0; i < Neighbours.size(); ++i)
+    {
+        if(Neighbours[i] != &InAgent)
+        {
+            CenterOfMass += Neighbours[i]->m_Transform.m_Position;
+            ++NeighbourCount;
+        }
+    }
+
+    if(NeighbourCount > 0)
+    {
+        CenterOfMass / NeighbourCount;
+        SteeringForce = Steering::CalcSeek(InAgent, CenterOfMass);
+    }
+
+    return SteeringForce;
 }
 
 //----------------------------------------------------------
