@@ -13,6 +13,7 @@ GameObject::GameObject()
     {
         if(World *world = application->GetWorld())
         {
+            m_World = world;
             world->RegisterGameObject( this );
         }
     }

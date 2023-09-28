@@ -94,10 +94,6 @@ void World::Draw(SDL_Renderer* InRenderer)
                                      m_worldViewTransform,
                                      m_gameObjects[i]->m_Transform,
                                      m_gameObjects[i]->m_texture);
-
-            RenderUtils::DrawTransform(InRenderer,
-                                       m_worldViewTransform,
-                                       m_gameObjects[i]->m_Transform);
         }
     }
 }

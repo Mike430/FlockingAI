@@ -6,14 +6,11 @@ Agent::Agent()
 : GameObject()
 , m_Target(nullptr)
 , Behaviour(Steering::Behaviour::Seek)
-, m_Acceleration()
+, m_SteeringForce()
 , m_Velocity()
 , m_Heading()
-, m_HeadingSide()
 , m_Mass(1000.0)
 , m_MaxSpeed(350.0)
-, m_MaxForce(100.0)
-, m_MaxTurnRate(180.0 * DEGREES_TO_RADIANS)
 {
 }
 
@@ -29,16 +26,18 @@ void Agent::Update( const float InDeltaTime )
 {
     GameObject::Update( InDeltaTime );
 
-    m_Velocity += m_Acceleration / InDeltaTime;
+    Vec2 Acceleration = m_SteeringForce / m_Mass;
+    m_Velocity += Acceleration / InDeltaTime;
     m_Velocity.Clamp(m_MaxSpeed);
     m_Transform.m_Position += m_Velocity * InDeltaTime;
 
     if(m_Velocity.GetLengthSqr() > 0.00001)
     {
         m_Heading = m_Velocity.GetNormalised();
-        m_HeadingSide = m_Heading.GetPerpendicularVector();
         RotateToFaceHeading(InDeltaTime);
     }
+
+    m_SteeringForce = {0.0f,0.0f};
 }
 
 //----------------------------------------------------------

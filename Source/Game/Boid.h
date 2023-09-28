@@ -8,4 +8,6 @@ public:
     Boid();
     ~Boid();
     virtual void Update(const float InDeltaTime) override;
+
+    float m_visibilityRadius;
 };

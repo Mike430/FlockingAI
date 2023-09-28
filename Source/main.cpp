@@ -8,7 +8,7 @@ int main( int argc, char *args[] )
 
     { // setup a testing scenario
         std::vector< Boid * > Boids;
-        s32 numOfBoids = 10;
+        s32 numOfBoids = 100;
         for ( int i = 0; i < numOfBoids; ++i )
         {
             Boid *NewBoid = new Boid();
@@ -17,7 +17,7 @@ int main( int argc, char *args[] )
             NewBoid->m_Transform.m_Position = { x, y };
             NewBoid->m_Transform.m_Rotation = i * 15;
             NewBoid->m_texture = i == 0 || i == ( numOfBoids - 1 ) ? App->GetTexture( "Assets/Player.png" ) : App->GetTexture( "Assets/Enemy.png" );
-            NewBoid->Behaviour = Steering::Behaviour::Arrive;
+            NewBoid->Behaviour = Steering::Behaviour::Flock;
             Boids.push_back( NewBoid );
         }
 

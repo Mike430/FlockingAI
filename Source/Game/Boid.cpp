@@ -1,8 +1,11 @@
 #include "Boid.h"
+#include "Core/WorldUtilities.h"
 
 //----------------------------------------------------------
 
 Boid::Boid()
+        : Agent()
+          , m_visibilityRadius( 300.0f )
 {
 
 }
@@ -19,28 +22,36 @@ Boid::~Boid()
 void Boid::Update( const float InDeltaTime )
 {
     const Vec2 Target = m_Target != nullptr ? m_Target->m_Transform.m_Position : Vec2();
-
-    Vec2 SteeringForce;
+    std::vector< Agent * > NearbyBoids;
     switch ( Behaviour )
     {
         case Steering::Behaviour::Seek:
-            SteeringForce = Steering::CalcSeek( *this, Target );
+            m_SteeringForce = Steering::CalcSeek( *this, Target );
             break;
         case Steering::Behaviour::Flee:
-            SteeringForce = Steering::CalcFlee( *this, Target );
+            m_SteeringForce = Steering::CalcFlee( *this, Target );
             break;
         case Steering::Behaviour::Arrive:
-            SteeringForce = Steering::CalcArrive( *this, Target );
+            m_SteeringForce = Steering::CalcArrive( *this, Target );
             break;
         case Steering::Behaviour::Wander:
-            SteeringForce = Steering::CalcDumbWander( *this );
+            m_SteeringForce = Steering::CalcDumbWander( *this );
+            break;
+        case Steering::Behaviour::Flock:
+            NearbyBoids = WorldUtilities::GetAllActorsOfTypeInRadius< Agent >( GetWorld(),
+                                                                               m_Transform.m_Position,
+                                                                               m_visibilityRadius );
+            m_SteeringForce = Steering::CalcDumbWander( *this );
+            m_SteeringForce += Steering::CalcSeparation( *this, NearbyBoids, m_visibilityRadius );
+            m_SteeringForce += Steering::CalcAlignment( *this, NearbyBoids, m_visibilityRadius );
+            m_SteeringForce += Steering::CalcCohesion( *this, NearbyBoids, m_visibilityRadius );
+
+            m_SteeringForce.Clamp( m_MaxSpeed );
             break;
         default:
-        LOG("Error - steering behaviour set is not handled by the Agent");
+        LOG( "Error - steering behaviour set is not handled by the Agent" );
             break;
     }
-
-    m_Acceleration = SteeringForce / m_Mass;
 
     Agent::Update( InDeltaTime );
 }
