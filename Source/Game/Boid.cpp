@@ -5,11 +5,11 @@
 
 Boid::Boid()
         : Agent()
-          , m_visibilityRadius( 4000.0f )
-          , m_WanderAmount(1000.0f)
+          , m_visibilityRadius( 400.0f )
+          , m_WanderAmount(1.0f)
           , m_SeparationAmount(100000.0f)
-          , m_AlignmentAmount(1000.0f)
-          , m_CohesionAmount(500.0f)
+          , m_AlignmentAmount(0.005f)
+          , m_CohesionAmount(0.0005f)
           , m_ReturnToOrignMode(false)
 {}
 
