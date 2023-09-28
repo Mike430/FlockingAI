@@ -17,10 +17,10 @@ public:
     Vec2 m_Velocity;
     Vec2 m_Heading; // A unit vector reflecting the last known velocity of the boid (does not update if stationary or too slow - not our true forward vector
     Vec2 m_HeadingSide; // A unit vector perpendicular to our heading
-    double m_Mass;
-    double m_MaxSpeed;
-    double m_MaxForce;
-    double m_MaxTurnRate;
+    float m_Mass;
+    float m_MaxSpeed;
+    float m_MaxForce;
+    float m_MaxTurnRate;
 
     virtual void Update(const float InDeltaTime) override;
 

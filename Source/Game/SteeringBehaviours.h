@@ -15,13 +15,13 @@ namespace Steering
         Seek,
         Flee,
         Arrive,
-        Pursuit,
-        Evade,
+        Wander
     };
 
     Vec2 CalcSeek( const Boid &InBoid, const Vec2 &InTarget );
     Vec2 CalcFlee( const Boid &InBoid, const Vec2 &InTarget );
     Vec2 CalcArrive( const Boid &InBoid, const Vec2 &InTarget );
+    Vec2 CalcWander( const Boid &InBoid, const Vec2 &InTarget );
 }
 
 //----------------------------------------------------------

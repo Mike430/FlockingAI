@@ -39,12 +39,13 @@ void Boid::Update( const float InDeltaTime )
             SteeringForce = Steering::CalcSeek( *this, m_Target->m_Transform.m_Position );
             break;
         case Steering::Behaviour::Flee:
+            SteeringForce = Steering::CalcFlee( *this, m_Target->m_Transform.m_Position );
             break;
         case Steering::Behaviour::Arrive:
+            SteeringForce = Steering::CalcArrive( *this, m_Target->m_Transform.m_Position );
             break;
-        case Steering::Behaviour::Pursuit:
-            break;
-        case Steering::Behaviour::Evade:
+        case Steering::Behaviour::Wander:
+            SteeringForce = Steering::CalcWander( *this, m_Target->m_Transform.m_Position );
             break;
         default:
             LOG("Error - steering behaviour set is not handled by the boid");

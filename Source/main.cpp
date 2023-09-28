@@ -17,6 +17,7 @@ int main( int argc, char *args[] )
             NewObject->m_Transform.m_Position = { x, y };
             NewObject->m_Transform.m_Rotation = i * 15;
             NewObject->m_texture = i == 0 || i == ( numOfBoids - 1 ) ? App->GetTexture( "Assets/Player.png" ) : App->GetTexture( "Assets/Enemy.png" );
+            NewObject->Behaviour = Steering::Behaviour::Arrive;
             Boids.push_back( NewObject );
         }
 
