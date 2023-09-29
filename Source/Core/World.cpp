@@ -98,6 +98,11 @@ void World::Draw(SDL_Renderer* InRenderer)
                                      m_gameObjects[i]->m_Transform,
                                      m_gameObjects[i]->m_texture);
         }
+
+        if(m_gameObjects[i]->m_DrawDebugInfo == true)
+        {
+            m_gameObjects[i]->DrawDebugInfo(InRenderer, m_worldViewTransform);
+        }
     }
 }
 

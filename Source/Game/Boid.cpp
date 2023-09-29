@@ -1,15 +1,16 @@
 #include "Boid.h"
 #include "Core/WorldUtilities.h"
+#include "Core/RenderUtils.h"
 
 //----------------------------------------------------------
 
 Boid::Boid()
         : Agent()
           , m_visibilityRadius( 250.0f )
-          , m_WanderAmount(1.0f)
-          , m_SeparationAmount(1.0f)
-          , m_AlignmentAmount(1.25f)
-          , m_CohesionAmount(1.25f)
+          , m_WanderAmount(2.5f)
+          , m_SeparationAmount(1.5f)
+          , m_AlignmentAmount(1.0f)
+          , m_CohesionAmount(1.0f)
           , m_ReturnToOrignMode(false)
 {}
 
@@ -22,7 +23,8 @@ Boid::~Boid()
 
 void Boid::Update( const float InDeltaTime )
 {
-    if(m_Transform.m_Position.GetLength() > (WINDOW_HALF_WIDTH * 1.75f) || m_ReturnToOrignMode == true)
+    d_IsFlocking = false;
+    if(m_Transform.m_Position.GetLength() > (WINDOW_HALF_WIDTH * 1.5f) || m_ReturnToOrignMode == true)
     {
         m_ReturnToOrignMode = true;
         m_SteeringForce = Steering::CalcSeek( *this, Vec2() );
@@ -50,17 +52,19 @@ void Boid::Update( const float InDeltaTime )
                 m_SteeringForce = Steering::CalcDumbWander( *this );
                 break;
             case Steering::Behaviour::Flock:
+                d_IsFlocking = true;
                 NearbyBoids = WorldUtilities::GetAllActorsOfTypeInRadius< Agent >( GetWorld(),
                                                                                    m_Transform.m_Position,
                                                                                    m_visibilityRadius );
-                m_SteeringForce = Steering::CalcDumbWander( *this ).GetNormalised() * m_WanderAmount;
-                m_SteeringForce += Steering::CalcSeparation( *this, NearbyBoids ).GetNormalised() * m_SeparationAmount;
-                m_SteeringForce += Steering::CalcAlignment( *this, NearbyBoids ).GetNormalised() * m_AlignmentAmount;
-                m_SteeringForce += Steering::CalcCohesion( *this, NearbyBoids ).GetNormalised() * m_CohesionAmount;
+                d_DumbWander = Steering::CalcDumbWander( *this ).GetNormalised() * m_WanderAmount;
+                d_Separation = Steering::CalcSeparation( *this, NearbyBoids ).GetNormalised() * m_SeparationAmount;
+                d_Alignment = Steering::CalcAlignment( *this, NearbyBoids ).GetNormalised() * m_AlignmentAmount;
+                d_Cohesion = Steering::CalcCohesion( *this, NearbyBoids, d_CohesionCenterofMass ).GetNormalised() * m_CohesionAmount;
 
-                m_SteeringForce = m_SteeringForce.GetNormalised() * m_MaxSpeed;
+                d_FinalSteering = d_DumbWander + d_Separation + d_Alignment + d_Cohesion;
+                d_FinalSteering = d_FinalSteering.GetNormalised() * m_MaxSpeed;
 
-                m_SteeringForce.Clamp( m_MaxSpeed );
+                m_SteeringForce = d_FinalSteering;
                 break;
             default:
             LOG( "Error - steering behaviour set is not handled by the Agent" );
@@ -69,6 +73,29 @@ void Boid::Update( const float InDeltaTime )
     }
 
     Agent::Update( InDeltaTime );
+}
+
+//----------------------------------------------------------
+
+void Boid::DrawDebugInfo( SDL_Renderer *InRenderer, const Transform &InWorldView )
+{
+    const float LengthMultiplier = 50.0f;
+    RenderUtils::DrawCircle(InRenderer, InWorldView, m_Transform.m_Position, m_visibilityRadius, d_IsFlocking ? Colours::Green : Colours::Red);
+
+    RenderUtils::DrawLine(InRenderer, InWorldView, m_Transform.m_Position, m_Transform.m_Position + d_DumbWander * LengthMultiplier,
+                          Colours::Yellow);
+    RenderUtils::DrawLine(InRenderer, InWorldView, m_Transform.m_Position, m_Transform.m_Position + d_Separation * LengthMultiplier,
+                          Colours::Cyan);
+    RenderUtils::DrawLine(InRenderer, InWorldView, m_Transform.m_Position, m_Transform.m_Position + d_Alignment * LengthMultiplier,
+                          Colours::Violet);
+//    RenderUtils::DrawLine(InRenderer, InWorldView, m_Transform.m_Position, m_Transform.m_Position + d_Cohesion * LengthMultiplier,
+//                          Colours::Green);
+    RenderUtils::DrawLine(InRenderer, InWorldView, m_Transform.m_Position, d_CohesionCenterofMass, Colours::Green);
+    RenderUtils::DrawCircle(InRenderer, InWorldView, d_CohesionCenterofMass, 20, Colours::Green);
+
+
+    RenderUtils::DrawLine(InRenderer, InWorldView, m_Transform.m_Position, m_Transform.m_Position + d_FinalSteering,
+                          Colours::Red);
 }
 
 //----------------------------------------------------------

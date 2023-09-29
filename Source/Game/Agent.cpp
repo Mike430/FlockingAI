@@ -24,8 +24,6 @@ Agent::~Agent()
 
 void Agent::Update( const float InDeltaTime )
 {
-    GameObject::Update( InDeltaTime );
-
     Vec2 Acceleration = m_SteeringForce / m_Mass;
     m_Velocity += Acceleration / InDeltaTime;
     m_Velocity.Clamp(m_MaxSpeed);

@@ -82,14 +82,15 @@ Vec2 Steering::CalcAlignment( const Agent& InAgent, const std::vector<Agent*>& N
     if(NeighbourCount > 0)
     {
         SteeringForce /= NeighbourCount;
-        //SteeringForce -= InAgent.m_Heading;
+        SteeringForce -= InAgent.m_Heading;
     }
+
     return SteeringForce;
 }
 
 //----------------------------------------------------------
 
-Vec2 Steering::CalcCohesion( const Agent& InAgent, const std::vector<Agent*>& Neighbours )
+Vec2 Steering::CalcCohesion( const Agent& InAgent, const std::vector<Agent*>& Neighbours, Vec2& OutCenterOfMass )
 {
     Vec2 SteeringForce, CenterOfMass;
     s32 NeighbourCount = 0;
@@ -105,10 +106,11 @@ Vec2 Steering::CalcCohesion( const Agent& InAgent, const std::vector<Agent*>& Ne
 
     if(NeighbourCount > 0)
     {
-        CenterOfMass / NeighbourCount;
+        CenterOfMass /= NeighbourCount;
         SteeringForce = Steering::CalcSeek(InAgent, CenterOfMass);
     }
 
+    OutCenterOfMass = CenterOfMass;
     return SteeringForce;
 }
 

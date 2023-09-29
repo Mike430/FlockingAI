@@ -6,16 +6,36 @@ void RenderUtils::DrawLine( SDL_Renderer* InRenderer,
                             const Transform& InWorldView,
                             const Vec2& InStart,
                             const Vec2& InEnd,
-                            const u8 InR,
-                            const u8 InG,
-                            const u8 InB )
+                            const Colour& InColour )
 {
     const Vec2 HalfView(WINDOW_HALF_WIDTH, WINDOW_HALF_HEIGHT);
     const Vec2 Start = (InStart - InWorldView.m_Position) + HalfView;
     const Vec2 End = (InEnd - InWorldView.m_Position) + HalfView;
 
-    SDL_SetRenderDrawColor( InRenderer, InR, InG, InB, 255);
+    SDL_SetRenderDrawColor( InRenderer, InColour.r, InColour.g, InColour.b, 255);
     SDL_RenderDrawLineF( InRenderer, Start.x, Start.y, End.x, End.y );
+}
+
+//----------------------------------------------------------
+
+void RenderUtils::DrawCircle( SDL_Renderer *InRenderer,
+                              const Transform &InWorldView,
+                              const Vec2 &InCenter,
+                              const float InRadius,
+                              const Colour &InColour )
+{
+    const s32 resoluion = 12;
+    const s32 division = 360 / resoluion;
+    s32 counter = 0;
+
+    while(counter < 360)
+    {
+        s32 step = counter + division;
+        Vec2 Start = InCenter + ( Vec2(sin(counter * DEGREES_TO_RADIANS), cos(counter * DEGREES_TO_RADIANS)) * InRadius );
+        Vec2 End = InCenter + ( Vec2(sin(step * DEGREES_TO_RADIANS), cos(step * DEGREES_TO_RADIANS)) * InRadius );
+        DrawLine(InRenderer, InWorldView, Start, End, InColour);
+        counter += division;
+    }
 }
 
 //----------------------------------------------------------
@@ -28,8 +48,8 @@ void RenderUtils::DrawTransform( SDL_Renderer* InRenderer,
     const Vec2 Forward = InTransform.CalculateForwardVector();
     const Vec2 Right = InTransform.CalculateRightVector();
 
-    RenderUtils::DrawLine( InRenderer, InWorldView, Location, Location + Forward * 10, 200, 200, 255 );
-    RenderUtils::DrawLine( InRenderer, InWorldView, Location, Location + Right * 10, 255, 200, 200 );
+    RenderUtils::DrawLine( InRenderer, InWorldView, Location, Location + Forward * 10, Colours::Red );
+    RenderUtils::DrawLine( InRenderer, InWorldView, Location, Location + Right * 10, Colours::Blue );
 }
 
 void RenderUtils::DrawTexture( SDL_Renderer* InRenderer,

@@ -189,6 +189,7 @@ void Application::StartGameLoop()
 {
     SDL_Event Event;
     bool ShouldQuit = false;
+    bool IsPaused = false;
 
     const float FakeDeltaTime = 1.0f / 60.0f;
     double PreviousFrameUpdateTime = 0.0;
@@ -204,7 +205,23 @@ void Application::StartGameLoop()
         UpdateStart = Clock::now();
         while ( SDL_PollEvent( &Event ))
         {
-            if ( Event.type == SDL_QUIT ) ShouldQuit = true;
+            if ( Event.type == SDL_QUIT )
+            {
+                ShouldQuit = true;
+            }
+            if ( Event.type == SDL_KEYUP )
+            {
+                if ( Event.key.keysym.sym == SDLK_ESCAPE )
+                {
+                    ShouldQuit = true;
+                }
+
+                if ( Event.key.keysym.sym == SDLK_SPACE )
+                {
+                    IsPaused = !IsPaused;
+                }
+            }
+
             ImGui_ImplSDL2_ProcessEvent( &Event );
         }
 
@@ -219,7 +236,10 @@ void Application::StartGameLoop()
                                 255 );
         SDL_RenderClear( m_Renderer );
 
-        m_World->Update(FakeDeltaTime);
+        if(IsPaused == false)
+        {
+            m_World->Update( FakeDeltaTime );
+        }
         UpdateEnd = Clock::now();
         m_World->Draw(m_Renderer);
 

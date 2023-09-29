@@ -26,7 +26,7 @@ namespace Steering
 
     Vec2 CalcSeparation( const Agent &InAgent, const std::vector< Agent * > &Neighbours );
     Vec2 CalcAlignment( const Agent &InAgent, const std::vector< Agent * > &Neighbours );
-    Vec2 CalcCohesion( const Agent &InAgent, const std::vector< Agent * > &Neighbours );
+    Vec2 CalcCohesion( const Agent &InAgent, const std::vector< Agent * > &Neighbours, Vec2& OutCenterOfMass );
 }
 
 //----------------------------------------------------------
