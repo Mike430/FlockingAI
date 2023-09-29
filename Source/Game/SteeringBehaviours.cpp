@@ -82,9 +82,8 @@ Vec2 Steering::CalcAlignment( const Agent& InAgent, const std::vector<Agent*>& N
     if(NeighbourCount > 0)
     {
         SteeringForce /= NeighbourCount;
-        SteeringForce -= InAgent.m_Heading;
+        //SteeringForce -= InAgent.m_Heading;
     }
-
     return SteeringForce;
 }
 

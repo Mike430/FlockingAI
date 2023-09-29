@@ -70,10 +70,13 @@ void World::UnRegisterGameObject( GameObject *InObject )
 
 void World::Update( const float InDeltaTime )
 {
+    ImGui::Begin( "Scene info" );
     for ( int i = 0; i < m_gameObjects.size(); ++i )
     {
         m_gameObjects[i]->Update(InDeltaTime);
+        ImGui::Text("GameObject(%d) - x: %.1f, y: %.1f", m_gameObjects[i]->m_Transform.m_Position.x, m_gameObjects[i]->m_Transform.m_Position.y);
     }
+    ImGui::End();
 }
 
 //----------------------------------------------------------

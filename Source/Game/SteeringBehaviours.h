@@ -16,9 +16,6 @@ namespace Steering
         Flee,
         Arrive,
         Wander,
-        Separation,
-        Alignment,
-        Cohesion,
         Flock
     };
 

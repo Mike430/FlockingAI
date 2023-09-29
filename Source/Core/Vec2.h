@@ -36,8 +36,8 @@ public:
     inline float GetLength() const                                  { return sqrtf( ( x * x ) + ( y * y ) ); }
 
     inline float DotProduct( const Vec2& other ) const              { return ( this->x * other.x ) + ( this->y * other.y ); }
-    inline Vec2 GetNormalised() const                               { float length = GetLength(); return Vec2( x / length, y / length ); }
-    inline void Normalise()                                         { float length = GetLength(); x /= length; y /= length; }
+    inline Vec2 GetNormalised() const                               { float length = GetLength(); return length == 0.0f ? Vec2() : Vec2( x / length, y / length ); }
+    inline void Normalise()                                         { float length = GetLength(); *this = length == 0.0f ? Vec2() : *this / length; }
 
     inline Vec2 GetPerpendicularVector() const                      { return Vec2( -y, x ); }
     inline Vec2 GetReverse() const                                  { return Vec2( -x, -y ); }
