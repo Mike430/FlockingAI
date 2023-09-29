@@ -8,7 +8,7 @@ Boid::Boid()
         : Agent()
           , m_visibilityRadius( 250.0f )
           , m_WanderAmount(1.25f)
-          , m_SeparationAmount(1.5f)
+          , m_SeparationAmount(1.9f)
           , m_AlignmentAmount(1.0f)
           , m_CohesionAmount(1.4f)
           , m_ReturnToOrignMode(false)
@@ -28,11 +28,11 @@ Boid::~Boid()
 void Boid::Update( const float InDeltaTime )
 {
     d_IsFlocking = false;
-    if(m_Transform.m_Position.GetLength() > (WINDOW_HALF_WIDTH * 1.5f) || m_ReturnToOrignMode == true)
+    if(m_Transform.m_Position.GetLength() > (WINDOW_HALF_WIDTH * 1.0f) || m_ReturnToOrignMode == true)
     {
         m_ReturnToOrignMode = true;
         m_SteeringForce = Steering::CalcSeek( *this, Vec2() );
-        if(m_Transform.m_Position.GetLength() < (WINDOW_HALF_WIDTH * 1.0f))
+        if(m_Transform.m_Position.GetLength() < (WINDOW_HALF_WIDTH * 0.8f))
         {
             m_ReturnToOrignMode = false;
         }

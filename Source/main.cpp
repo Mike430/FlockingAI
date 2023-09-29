@@ -21,7 +21,7 @@ int main( int argc, char *args[] )
             NewBoid->m_texture = i == 0 || i == ( numOfBoids - 1 ) ? App->GetTexture( "Assets/Player.png" ) : App->GetTexture( "Assets/Enemy.png" );
 
             NewBoid->Behaviour = Steering::Behaviour::Flock;
-            NewBoid->m_DrawDebugInfo = i == 0;
+            //NewBoid->m_DrawDebugInfo = i == 0;
 
             Boids.push_back( NewBoid );
         }
