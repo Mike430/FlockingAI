@@ -17,8 +17,13 @@ public:
     float m_CohesionAmount;
     bool m_ReturnToOrignMode;
 
+    Vec2 m_WanderTarget;
+    float m_WanderOffset;
+    float m_WanderRadius;
+    float m_WanderJitter;
+
     bool d_IsFlocking;
-    Vec2 d_DumbWander;
+    Vec2 d_Wander;
     Vec2 d_Separation;
     Vec2 d_Alignment;
     Vec2 d_Cohesion, d_CohesionCenterofMass;

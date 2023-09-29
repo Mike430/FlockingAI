@@ -39,9 +39,16 @@ Vec2 Steering::CalcArrive( const Agent& InAgent, const Vec2& InTarget )
 
 //----------------------------------------------------------
 
-Vec2 Steering::CalcDumbWander( const Agent& InAgent )
+Vec2 Steering::CalcWander( const Agent &InAgent, Vec2& OutTarget, float InOffset, float InRadius, float InJitter )
 {
-    return InAgent.m_Transform.CalculateForwardUnitVector() * InAgent.m_MaxSpeed;
+    OutTarget += Vec2( (RAND_FLOAT_ZERO_TO_ONE * 2 - 1) * InJitter, (RAND_FLOAT_ZERO_TO_ONE * 2 - 1) * InJitter);
+    OutTarget.Normalise();
+    const Vec2 Forward = InAgent.m_Transform.CalculateForwardUnitVector();
+    const Vec2 Right = Forward.GetPerpendicularVector();
+    const Vec2 LocalTarget = Forward * OutTarget.y + Right * OutTarget.x;
+    const Vec2 FinalTarget = InAgent.m_Transform.m_Position + (Forward * InOffset) + (LocalTarget * InRadius);
+
+    return FinalTarget - InAgent.m_Transform.m_Position;
 }
 
 //----------------------------------------------------------

@@ -80,5 +80,6 @@ typedef std::chrono::duration<double, std::milli>       DurationMillis;
 
 #define RAND_SET_SEED( x ) ( srand(x) )
 #define RAND_NUM_IN_RANGE(InMin, InMax) ( ( rand() % ( ( InMax ) - ( InMin ) ) ) + ( InMin ) )
+#define RAND_FLOAT_ZERO_TO_ONE (static_cast<float>(rand()) / static_cast<float>(RAND_MAX))
 
 //----------------------------------------------------------

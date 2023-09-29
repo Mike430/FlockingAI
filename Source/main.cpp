@@ -8,7 +8,7 @@ int main( int argc, char *args[] )
 
     { // setup a testing scenario
         std::vector< Boid * > Boids;
-        s32 numOfBoids = 100;
+        s32 numOfBoids = 200;
         for ( int i = 0; i < numOfBoids; ++i )
         {
             Boid *NewBoid = new Boid();
