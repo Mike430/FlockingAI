@@ -9,7 +9,7 @@ Application *Application::Self = nullptr;
 
 //----------------------------------------------------------
 
-Application *Application::GetInstance()
+Application* Application::GetInstance()
 {
     if(Application::IsShuttingDown)
     {
@@ -146,7 +146,7 @@ bool Application::Initialise()
 
     m_Renderer = SDL_CreateRenderer( m_Window,
                                      -1,
-                                     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+                                     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC ); // Disable VSync for some interesting physics behaviour <- come back and fix this
 
     if ( m_Renderer == nullptr )
     {
@@ -194,15 +194,17 @@ void Application::StartGameLoop()
     const float FakeDeltaTime = 1.0f / 60.0f;
     double PreviousFrameUpdateTime = 0.0;
     double PreviousFrameRenderTime = 0.0;
-    TimeStamp UpdateStart;
+    double DeltaTime = FakeDeltaTime;
+    TimeStamp FrameStart;
     TimeStamp UpdateEnd;
     TimeStamp RenderEnd;
+    TimeStamp FrameEnd;
 
     while ( ShouldQuit == false )
     {
-        PreviousFrameUpdateTime = std::chrono::duration_cast<DurationMillis>(UpdateEnd - UpdateStart).count();
+        PreviousFrameUpdateTime = std::chrono::duration_cast<DurationMillis>(UpdateEnd - FrameStart).count();
         PreviousFrameRenderTime = std::chrono::duration_cast<DurationMillis>(RenderEnd - UpdateEnd).count();
-        UpdateStart = Clock::now();
+        FrameStart = Clock::now();
         while ( SDL_PollEvent( &Event ))
         {
             if ( Event.type == SDL_QUIT )
@@ -238,15 +240,17 @@ void Application::StartGameLoop()
 
         if(IsPaused == false)
         {
-            m_World->Update( FakeDeltaTime );
+            m_World->Update( DeltaTime );
         }
         UpdateEnd = Clock::now();
         m_World->Draw(m_Renderer);
 
         ImGui::Begin( "Stats" );
-        ImGui::Text( "DeltaTime = %.5f\nFramerate = %.5f\nUpdate time = %.5f ms\nRender time = %.5f ms",
+        ImGui::Text( "TargetDeltaTime = %.5f\nTargetFramerate = %.5f\nDeltaTime = %.5f\nFramerate = %.5f\nUpdate time = %.5f ms\nRender time = %.5f ms",
                      FakeDeltaTime,
                      1.0f / FakeDeltaTime,
+                     DeltaTime,
+                     1.0f / DeltaTime,
                      PreviousFrameUpdateTime,
                      PreviousFrameRenderTime );
         ImGui::End();
@@ -257,6 +261,8 @@ void Application::StartGameLoop()
         SDL_UpdateWindowSurface( m_Window );
         RenderEnd = Clock::now(); // Vsync occurs when the renderer presents on the next line
         SDL_RenderPresent( m_Renderer );
+        FrameEnd = Clock::now();
+        DeltaTime = std::chrono::duration_cast<DurationSecs>(FrameEnd - FrameStart).count(); // perform at end so first execution doesn't set as zero. This causes divide by zero errors in physics calculations
     }
 }
 

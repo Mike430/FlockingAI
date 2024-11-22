@@ -37,7 +37,7 @@ static_assert( WINDOW_HALF_HEIGHT == WINDOW_HEIGHT / 2, "The window's half heigh
 
 //----------------------------------------------------------
 
-#define LOG(...) printf( "Log in file \"%s\" at line (%d) says:\t\"", __FILE__, __LINE__ ); printf( __VA_ARGS__ ); printf( "\"\n" )
+#define LOG(...) printf( "\"%s\" [%d]:\t\"", __FILE__, __LINE__ ); printf( __VA_ARGS__ ); printf( "\"\n" )
 
 //----------------------------------------------------------
 

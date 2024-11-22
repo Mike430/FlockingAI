@@ -6,7 +6,7 @@
 
 Boid::Boid()
         : Agent()
-          , m_visibilityRadius( 250.0f )
+          , m_visibilityRadius(250.0f)
           , m_WanderAmount(1.25f)
           , m_SeparationAmount(1.9f)
           , m_AlignmentAmount(1.0f)
@@ -14,7 +14,7 @@ Boid::Boid()
           , m_ReturnToOrignMode(false)
           , m_WanderTarget()
           , m_WanderOffset(200.0f)
-          , m_WanderRadius(75.0f)
+          , m_WanderRadius(150.0f)
           , m_WanderJitter(0.75f)
 {}
 
@@ -41,7 +41,7 @@ void Boid::Update( const float InDeltaTime )
     {
         const Vec2 Target = m_Target != nullptr ? m_Target->m_Transform.m_Position : Vec2();
         std::vector< Agent * > NearbyBoids;
-        switch ( Behaviour )
+        switch ( m_Behaviour )
         {
             case Steering::Behaviour::Seek:
                 m_SteeringForce = Steering::CalcSeek( *this, Target );

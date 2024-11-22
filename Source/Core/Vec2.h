@@ -41,6 +41,7 @@ public:
 
     inline Vec2 GetPerpendicularVector() const                      { return Vec2( -y, x ); }
     inline Vec2 GetReverse() const                                  { return Vec2( -x, -y ); }
+    inline Vec2 GetAbsolute() const                                 { return Vec2(fabs(x), fabs(y)); }
 
     // Returns a vector reflected by the normal (must be unit length), like the path of light reflecting off a mirror
     inline void Reflect( const Vec2& normal )                       { *this += ( ( 2.0f * DotProduct( normal ) ) * normal.GetReverse() ); }
@@ -56,14 +57,18 @@ public:
 
 inline bool operator==( const Vec2& lhs, const Vec2 rhs )
 {
-    return fabs( lhs.x - rhs.x ) < DEFAULT_EPSILON && fabs( lhs.y - rhs.y ) < DEFAULT_EPSILON;
+    Vec2 lhsA = lhs.GetAbsolute();
+    Vec2 rhsA = rhs.GetAbsolute();
+    return fabs( lhsA.x - rhsA.x ) < DEFAULT_EPSILON && fabs( lhsA.y - rhsA.y ) < DEFAULT_EPSILON;
 }
 
 //----------------------------------------------------------
 
 inline bool operator!=( const Vec2& lhs, const Vec2 rhs )
 {
-    return fabs( lhs.x - rhs.x ) > DEFAULT_EPSILON || fabs( lhs.y - rhs.y ) > DEFAULT_EPSILON;
+    Vec2 lhsA = lhs.GetAbsolute();
+    Vec2 rhsA = rhs.GetAbsolute();
+    return fabs( lhsA.x - rhsA.x ) > DEFAULT_EPSILON || fabs( lhsA.y - rhsA.y ) > DEFAULT_EPSILON;
 }
 
 //----------------------------------------------------------

@@ -5,7 +5,7 @@
 Agent::Agent()
 : GameObject()
 , m_Target(nullptr)
-, Behaviour(Steering::Behaviour::Seek)
+, m_Behaviour(Steering::Behaviour::Seek)
 , m_SteeringForce()
 , m_Velocity()
 , m_Heading()

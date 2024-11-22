@@ -13,7 +13,7 @@ public:
 
     Agent* m_Target;
 
-    Steering::Behaviour Behaviour;
+    Steering::Behaviour m_Behaviour;
     Vec2 m_SteeringForce;
     Vec2 m_Velocity;
     Vec2 m_Heading; // A unit vector reflecting the last known velocity of the Agent (does not update if stationary or too slow - not our true forward vector
